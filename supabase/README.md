@@ -15,19 +15,24 @@ Project: **Akaar** — `mwrlsblddpgjhhfwxvbc`, Postgres 17, ap-northeast-1.
 
 Applied in numeric order. Committed here, never applied only to the remote.
 
-| File | Contents |
+Filenames follow the Supabase CLI convention `<YYYYMMDDHHMMSS>_<name>.sql`.
+The CLI and the GitHub integration reject any other version format, so the
+prefix is not decorative.
+
+| Migration | Contents |
 |---|---|
-| `001_foundations` | Extensions, enums, `touch_updated_at` |
-| `002_identity` | Profiles, artisan/buyer profiles, the `*_private` split, role helpers |
-| `003_taxonomy` | Crafts, materials, techniques, unmapped terms |
-| `004_catalog` | Products, private pricing, media, craft passports, voice/extraction |
-| `005_demand` | Offers, custom requests, conversations, messages |
-| `006_orders` | Orders, order events, inventory reservations |
-| `007_platform` | Notifications, audit, consents, AI jobs, exports |
-| `008_rls` | Row level security for every table |
-| `009_functions` | Pricing, publication, negotiation, ordering, marketplace search |
-| `010_seed_taxonomy` | 7 categories, 25 crafts, 20 materials, 15 techniques |
-| `011_grants` | Explicit privileges; revokes the write paths that must go through RPC |
+| `…0001_foundations` | Extensions, enums, `touch_updated_at` |
+| `…0002_identity` | Profiles, artisan/buyer profiles, the `*_private` split, role helpers |
+| `…0003_taxonomy` | Crafts, materials, techniques, unmapped terms |
+| `…0004_catalog` | Products, private pricing, media, craft passports, voice/extraction |
+| `…0005_demand` | Offers, custom requests, conversations, messages |
+| `…0006_orders` | Orders, order events, inventory reservations |
+| `…0007_platform` | Notifications, audit, consents, AI jobs, exports |
+| `…0008_rls` | Row level security for every table |
+| `…0009_functions` | Pricing, publication, negotiation, ordering, marketplace search |
+| `…0010_seed_taxonomy` | 7 categories, 25 crafts, 20 materials, 15 techniques |
+| `…0011_grants` | Explicit privileges; revokes the write paths that must go through RPC |
+| `…0012_function_privileges` | Revokes the PUBLIC execute grant; guards inside `create_order_from_offer` |
 
 ## The two enforcement mechanisms
 

@@ -39,14 +39,14 @@ EOF
 su postgres -c "psql -p $PORT -d postgres -q -c 'drop database if exists akaar_val;' -c 'create database akaar_val;'"
 cp "$ROOT"/supabase/migrations/*.sql "$PGVAL/mig/"
 # pgvector is not installed in the local cluster; the column is exercised on Supabase.
-sed -i '/create extension if not exists vector/d' "$PGVAL/mig/001_foundations.sql"
-sed -i 's/extensions\.vector(768)/text/'          "$PGVAL/mig/003_taxonomy.sql"
+sed -i '/create extension if not exists vector/d' "$PGVAL"/mig/*.sql
+sed -i 's/extensions\.vector(768)/text/'          "$PGVAL"/mig/*.sql
 cp "$ROOT"/supabase/tests/*.sql "$PGVAL/"
 chown -R postgres:postgres "$PGVAL"
 
 su postgres -c "psql -p $PORT -d akaar_val -q -v ON_ERROR_STOP=1 -f $PGVAL/harness.sql"
 for f in "$PGVAL"/mig/*.sql; do
-  printf '  %-28s' "$(basename "$f")"
+  printf '  %-44s' "$(basename "$f")"
   su postgres -c "psql -p $PORT -d akaar_val -q -v ON_ERROR_STOP=1 -f $f" && echo "ok"
 done
 
