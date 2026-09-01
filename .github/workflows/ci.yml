@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "claude/**"]
+  pull_request:
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: android
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            17
+            21
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      # Seller and buyer must stay independent. This is the check that keeps the
+      # two halves buildable in parallel; it runs before anything expensive.
+      - name: Module boundaries
+        run: gradle checkModuleBoundaries
+
+      - name: Domain unit tests
+        run: gradle :core:domain:test
+
+      - name: Unit tests
+        run: gradle testDebugUnitTest
+
+      - name: Assemble debug
+        run: gradle assembleDebug
+        env:
+          ORG_GRADLE_PROJECT_supabase.url: ${{ secrets.SUPABASE_URL }}
+          ORG_GRADLE_PROJECT_supabase.anonKey: ${{ secrets.SUPABASE_ANON_KEY }}
+
+  database:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready --health-interval 10s
+          --health-timeout 5s --health-retries 5
+        ports: ["5432:5432"]
+    steps:
+      - uses: actions/checkout@v4
+
+      # Applies every migration to a clean database and runs the spine
+      # assertions: the price floor, buyer isolation from private pricing,
+      # offer turn order, and the internal-function privilege surface.
+      - name: Migrations and spine tests
+        env:
+          PGPASSWORD: postgres
+        run: |
+          psql -h localhost -U postgres -v ON_ERROR_STOP=1 -c 'create database akaar_ci;'
+          psql -h localhost -U postgres -d akaar_ci -v ON_ERROR_STOP=1 <<'SQL'
+          do $$ begin
+            if not exists (select 1 from pg_roles where rolname='anon') then create role anon nologin; end if;
+            if not exists (select 1 from pg_roles where rolname='authenticated') then create role authenticated nologin; end if;
+            if not exists (select 1 from pg_roles where rolname='service_role') then create role service_role nologin; end if;
+          end $$;
+          create schema if not exists extensions;
+          create schema if not exists auth;
+          grant usage on schema public, extensions to anon, authenticated, service_role;
+          create table if not exists auth.users (
+            id uuid primary key default gen_random_uuid(),
+            phone text unique, email text, created_at timestamptz default now());
+          create or replace function auth.uid() returns uuid language sql stable as $f$
+            select nullif(current_setting('request.jwt.claim.sub', true), '')::uuid;
+          $f$;
+          SQL
+          mkdir -p /tmp/mig && cp supabase/migrations/*.sql /tmp/mig/
+          sed -i '/create extension if not exists vector/d' /tmp/mig/001_foundations.sql
+          sed -i 's/extensions\.vector(768)/text/' /tmp/mig/003_taxonomy.sql
+          for f in /tmp/mig/*.sql; do
+            echo "applying $(basename $f)"
+            psql -h localhost -U postgres -d akaar_ci -q -v ON_ERROR_STOP=1 -f "$f"
+          done
+          psql -h localhost -U postgres -d akaar_ci -v ON_ERROR_STOP=1 -f supabase/tests/phase1_spine.sql

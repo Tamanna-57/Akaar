@@ -69,3 +69,17 @@ Phases 9–12 extend it; 13–14 harden it.
 |---|---|
 | 1 — Data spine on Supabase | Migrations written and verified locally (11 files, 16 assertions passing). `001` applied to the remote project; `002`–`011` pending — the Supabase connector dropped mid-apply. |
 | 2 — Android foundation | Next |
+
+### Phase 2 scope as built
+
+| Piece | Where |
+|---|---|
+| Gradle multi-module project, version catalog | `android/settings.gradle.kts`, `android/gradle/libs.versions.toml` |
+| Seller/buyer boundary enforced by the build | `android/build.gradle.kts` → `checkModuleBoundaries` |
+| Design system: palette, type scale, spacing, shape, touch targets | `:core:designsystem/theme` |
+| Six-state scaffold as a sealed hierarchy | `:core:common/UiState.kt`, `:core:designsystem/component/StateHost.kt` |
+| Components: buttons, inputs, cards, chips, skeletons, AI output block | `:core:designsystem/component` |
+| Canonical models mirroring the schema | `:core:domain/model` |
+| Repository contracts | `:core:domain/repository` |
+| Navigation host with role routing | `:app/navigation` |
+| CI: boundaries, unit tests, assemble, migrations + spine tests | `.github/workflows/ci.yml` |

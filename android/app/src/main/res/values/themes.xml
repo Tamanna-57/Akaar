@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Compose supplies the real theme; this is the pre-inflation window only. -->
+    <style name="Theme.Akaar" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#FBF9F5</item>
+    </style>
+</resources>
