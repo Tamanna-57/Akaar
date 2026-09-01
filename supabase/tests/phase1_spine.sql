@@ -215,3 +215,32 @@ begin
 end $$;
 
 \echo '=== PHASE 1 SPINE VERIFIED ==='
+
+-- ---------------- 10. internal functions are not part of the API surface
+do $$
+declare fn text;
+begin
+  foreach fn in array array['create_order_from_offer','notify_user','audit'] loop
+    if has_function_privilege('authenticated',
+         (select p.oid from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+          where n.nspname='public' and p.proname=fn limit 1), 'EXECUTE')
+    then raise exception 'FAIL: % is callable by authenticated', fn; end if;
+    if has_function_privilege('anon',
+         (select p.oid from pg_proc p join pg_namespace n on n.oid=p.pronamespace
+          where n.nspname='public' and p.proname=fn limit 1), 'EXECUTE')
+    then raise exception 'FAIL: % is callable by anon', fn; end if;
+  end loop;
+  raise notice 'PASS internal functions not callable by anon or authenticated';
+end $$;
+
+-- a client cannot write the negotiation tables directly
+do $$
+declare t text;
+begin
+  foreach t in array array['offers','orders','inventory_reservations','custom_requests'] loop
+    if has_table_privilege('authenticated', 'public.'||t, 'INSERT')
+       or has_table_privilege('authenticated', 'public.'||t, 'UPDATE')
+    then raise exception 'FAIL: authenticated can write % directly', t; end if;
+  end loop;
+  raise notice 'PASS negotiation and order tables are read-only to clients';
+end $$;
