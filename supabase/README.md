@@ -15,19 +15,32 @@ Project: **Akaar** — `mwrlsblddpgjhhfwxvbc`, Postgres 17, ap-northeast-1.
 
 Applied in numeric order. Committed here, never applied only to the remote.
 
-| File | Contents |
+Filenames follow the Supabase CLI convention `<YYYYMMDDHHMMSS>_<name>.sql`.
+The CLI and the GitHub integration reject any other version format, so the
+prefix is not decorative.
+
+The timestamps are **not arbitrary**: each one is the version the hosted project
+actually recorded when that migration was applied. The GitHub integration
+compares the versions in `supabase_migrations.schema_migrations` against the
+filenames here, and reports `Remote migration versions not found in local
+migrations directory` when they disagree. Renaming any of these files breaks
+that match. If you add a migration, use a new timestamp; never renumber an
+existing one.
+
+| Migration | Contents |
 |---|---|
-| `001_foundations` | Extensions, enums, `touch_updated_at` |
-| `002_identity` | Profiles, artisan/buyer profiles, the `*_private` split, role helpers |
-| `003_taxonomy` | Crafts, materials, techniques, unmapped terms |
-| `004_catalog` | Products, private pricing, media, craft passports, voice/extraction |
-| `005_demand` | Offers, custom requests, conversations, messages |
-| `006_orders` | Orders, order events, inventory reservations |
-| `007_platform` | Notifications, audit, consents, AI jobs, exports |
-| `008_rls` | Row level security for every table |
-| `009_functions` | Pricing, publication, negotiation, ordering, marketplace search |
-| `010_seed_taxonomy` | 7 categories, 25 crafts, 20 materials, 15 techniques |
-| `011_grants` | Explicit privileges; revokes the write paths that must go through RPC |
+| `…0001_foundations` | Extensions, enums, `touch_updated_at` |
+| `…0002_identity` | Profiles, artisan/buyer profiles, the `*_private` split, role helpers |
+| `…0003_taxonomy` | Crafts, materials, techniques, unmapped terms |
+| `…0004_catalog` | Products, private pricing, media, craft passports, voice/extraction |
+| `…0005_demand` | Offers, custom requests, conversations, messages |
+| `…0006_orders` | Orders, order events, inventory reservations |
+| `…0007_platform` | Notifications, audit, consents, AI jobs, exports |
+| `…0008_rls` | Row level security for every table |
+| `…0009_functions` | Pricing, publication, negotiation, ordering, marketplace search |
+| `…0010_seed_taxonomy` | 7 categories, 25 crafts, 20 materials, 15 techniques |
+| `…0011_grants` | Explicit privileges; revokes the write paths that must go through RPC |
+| `…0012_function_privileges` | Revokes the PUBLIC execute grant; guards inside `create_order_from_offer` |
 
 ## The two enforcement mechanisms
 
@@ -56,3 +69,26 @@ order creation with inventory reservation.
 
 pgvector is not installed in the local cluster, so the taxonomy embedding column
 is stubbed there and exercised only on Supabase.
+
+## Verifying against the real Supabase CLI
+
+The repo's structure can be checked without touching the hosted project:
+
+```bash
+npm install supabase@latest --no-save
+npx supabase --workdir . migration list \
+  --db-url "postgresql://postgres@127.0.0.1:55432/akaar_val?sslmode=disable"
+```
+
+Against a database whose history matches the repo, every migration reports the
+same `local` and `remote` version and nothing is pending.
+
+Against a database whose history was recorded under different version strings -
+which is what happens when migrations are applied through the management API
+rather than the CLI - the same command reports all twelve as unapplied plus
+twelve recorded versions with no matching file. Deploying in that state re-runs
+migration one and fails on `type "app_role" already exists`.
+
+That second state is what the filenames above prevent: they are chosen to
+match the hosted history exactly, so no reconciliation step is needed and the
+production database is never written to for bookkeeping reasons.

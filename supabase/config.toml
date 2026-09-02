@@ -1,0 +1,51 @@
+# Supabase project configuration.
+#
+# Required by the Supabase CLI and by the GitHub integration, which cannot
+# identify the project without it - its absence is why the "Supabase Preview"
+# check failed immediately rather than after running anything.
+
+project_id = "mwrlsblddpgjhhfwxvbc"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+# Matches the hosted project. pgvector and pg_trgm are created by the first
+# migration into the extensions schema.
+major_version = 17
+
+[db.pooler]
+enabled = false
+
+[auth]
+enabled = true
+# Artisans sign in by phone; there is no email or password path.
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = false
+enable_confirmations = false
+
+[auth.sms]
+enable_signup = true
+enable_confirmations = true
+
+[storage]
+enabled = true
+# Product photographs. Originals are never public: they are served through
+# signed URLs, because an original is the evidence that an enhanced image is
+# honest and it carries the artisan's unedited work.
+file_size_limit = "25MiB"
+
+[analytics]
+enabled = false
+
+[edge_runtime]
+enabled = true

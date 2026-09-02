@@ -81,8 +81,8 @@ jobs:
           $f$;
           SQL
           mkdir -p /tmp/mig && cp supabase/migrations/*.sql /tmp/mig/
-          sed -i '/create extension if not exists vector/d' /tmp/mig/001_foundations.sql
-          sed -i 's/extensions\.vector(768)/text/' /tmp/mig/003_taxonomy.sql
+          sed -i '/create extension if not exists vector/d' /tmp/mig/*.sql
+          sed -i 's/extensions\.vector(768)/text/' /tmp/mig/*.sql
           for f in /tmp/mig/*.sql; do
             echo "applying $(basename $f)"
             psql -h localhost -U postgres -d akaar_ci -q -v ON_ERROR_STOP=1 -f "$f"
