@@ -61,3 +61,26 @@ order creation with inventory reservation.
 
 pgvector is not installed in the local cluster, so the taxonomy embedding column
 is stubbed there and exercised only on Supabase.
+
+## Verifying against the real Supabase CLI
+
+The repo's structure can be checked without touching the hosted project:
+
+```bash
+npm install supabase@latest --no-save
+npx supabase --workdir . migration list \
+  --db-url "postgresql://postgres@127.0.0.1:55432/akaar_val?sslmode=disable"
+```
+
+Against a database whose history matches the repo, every migration reports the
+same `local` and `remote` version and nothing is pending.
+
+Against a database whose history was recorded under different version strings -
+which is what happens when migrations are applied through the management API
+rather than the CLI - the same command reports all twelve as unapplied plus
+twelve recorded versions with no matching file. Deploying in that state re-runs
+migration one and fails on `type "app_role" already exists`.
+
+That second state is what `tools/reconcile-migration-history.sql` exists to fix,
+and `scripts/test-reconcile.sh` proves both the fix and its refusal to run on a
+partially migrated database.
