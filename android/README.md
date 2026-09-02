@@ -76,6 +76,29 @@ Only the publishable anon key ever reaches the app, and it grants nothing on its
 own: row level security and the `SECURITY DEFINER` functions are the real
 boundary. No AI provider key is ever present on the device.
 
+## Localisation
+
+UI strings live in Android resources — `values/strings.xml` and
+`values-hi/strings.xml` per feature module — and are never translated by a model
+at runtime. Only user-generated content (a product description an artisan
+speaks) goes through translation. Hindi is the default: the seller journey is
+the one this app exists for.
+
+Hindi strings are real Devanagari, and a test asserts it. A Latin
+transliteration standing in for Hindi would be exactly the credibility failure
+the design system warns about.
+
+## Sign-in in round one
+
+`DemoSessionRepository` accepts any six digits and stores the session on the
+device. No SMS is sent, and the OTP screen says so on screen rather than
+implying a code is coming.
+
+It is a separate class rather than a flag inside the real one: phase 9 adds a
+Supabase-backed implementation beside it and changes one line in `DataModule`,
+so the demo path cannot survive into production by accident. Every screen above
+it is the real screen.
+
 ## What is not here yet
 
 `:core:data` currently holds the connection settings, the table and RPC names,
