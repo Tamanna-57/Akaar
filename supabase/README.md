@@ -19,6 +19,14 @@ Filenames follow the Supabase CLI convention `<YYYYMMDDHHMMSS>_<name>.sql`.
 The CLI and the GitHub integration reject any other version format, so the
 prefix is not decorative.
 
+The timestamps are **not arbitrary**: each one is the version the hosted project
+actually recorded when that migration was applied. The GitHub integration
+compares the versions in `supabase_migrations.schema_migrations` against the
+filenames here, and reports `Remote migration versions not found in local
+migrations directory` when they disagree. Renaming any of these files breaks
+that match. If you add a migration, use a new timestamp; never renumber an
+existing one.
+
 | Migration | Contents |
 |---|---|
 | `…0001_foundations` | Extensions, enums, `touch_updated_at` |
@@ -81,6 +89,6 @@ rather than the CLI - the same command reports all twelve as unapplied plus
 twelve recorded versions with no matching file. Deploying in that state re-runs
 migration one and fails on `type "app_role" already exists`.
 
-That second state is what `tools/reconcile-migration-history.sql` exists to fix,
-and `scripts/test-reconcile.sh` proves both the fix and its refusal to run on a
-partially migrated database.
+That second state is what the filenames above prevent: they are chosen to
+match the hosted history exactly, so no reconciliation step is needed and the
+production database is never written to for bookkeeping reasons.

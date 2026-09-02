@@ -17,6 +17,10 @@ if ! su postgres -c "psql -p $PORT -d postgres -tAc 'select 1'" >/dev/null 2>&1;
   sleep 1
 fi
 
+# Clear before copying: renamed or deleted migrations would otherwise linger
+# here and get applied alongside the current set, producing "already exists"
+# errors that look like a schema bug but are just stale files.
+rm -rf "$PGVAL/mig"
 mkdir -p "$PGVAL/mig"
 cat > "$PGVAL/harness.sql" <<'EOF'
 -- Minimal stand-in for the Supabase-managed objects the migrations rely on.
@@ -36,7 +40,11 @@ create or replace function auth.uid() returns uuid language sql stable as $$
 $$;
 EOF
 
-su postgres -c "psql -p $PORT -d postgres -q -c 'drop database if exists akaar_val;' -c 'create database akaar_val;'"
+# Terminate stragglers first: a leftover connection makes DROP DATABASE fail,
+# and the run would then apply migrations onto an existing schema and report
+# confusing "already exists" errors instead of starting clean.
+su postgres -c "psql -p $PORT -d postgres -q -c \"select pg_terminate_backend(pid) from pg_stat_activity where datname='akaar_val' and pid <> pg_backend_pid();\"" >/dev/null 2>&1 || true
+su postgres -c "psql -p $PORT -d postgres -q -v ON_ERROR_STOP=1 -c 'drop database if exists akaar_val;' -c 'create database akaar_val;'"
 cp "$ROOT"/supabase/migrations/*.sql "$PGVAL/mig/"
 # pgvector is not installed in the local cluster; the column is exercised on Supabase.
 sed -i '/create extension if not exists vector/d' "$PGVAL"/mig/*.sql
