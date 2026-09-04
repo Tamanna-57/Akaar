@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.turbo/
+
+# React Native
+ios/build/
+ios/Pods/
+android/app/build/
+android/build/
+*.jsbundle
+.metro-health-check*
+
+# Env
+.env
+.env.local
