@@ -1,7 +1,7 @@
-import type { Capability } from "./capability";
-import { MediaRole, type ProductStatus } from "./enums";
-import { Money } from "./money";
-import type { Translatable } from "./translatable";
+import type { Capability } from "./capability.ts";
+import { MediaRole, type ProductStatus } from "./enums.ts";
+import { Money } from "./money.ts";
+import type { Translatable } from "./translatable.ts";
 
 export interface Media {
   id: string;

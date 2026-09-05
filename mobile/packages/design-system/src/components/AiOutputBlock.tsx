@@ -1,10 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { Space } from "../theme/space";
-import { AkaarType } from "../theme/type";
-import { useAkaarColors } from "../theme/theme";
-import { AkaarPrimaryButton, AkaarTextButton } from "./Buttons";
-import { AkaarCard } from "./Surfaces";
+import { Space } from "../theme/space.ts";
+import { AkaarType } from "../theme/type.ts";
+import { useAkaarColors } from "../theme/theme.tsx";
+import { AkaarPrimaryButton, AkaarTextButton } from "./Buttons.tsx";
+import { AkaarCard } from "./Surfaces.tsx";
 
 /** What the seller may do with a value the machine proposed. */
 export const AiAction = {

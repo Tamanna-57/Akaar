@@ -1,12 +1,12 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AppRole } from "@akaar/core-domain";
 import React from "react";
-import { BuyerRoutes } from "../features/buyer/routes";
-import { ClusterRoutes } from "../features/cluster/routes";
-import { LaunchScreen } from "../features/onboarding/LaunchScreen";
-import { OnboardingRoutes } from "../features/onboarding/routes";
-import { SellerRoutes } from "../features/seller/routes";
-import { PendingScreen } from "./PendingScreen";
+import { BuyerRoutes } from "../features/buyer/routes.ts";
+import { ClusterRoutes } from "../features/cluster/routes.ts";
+import { LaunchScreen } from "../features/onboarding/LaunchScreen.tsx";
+import { OnboardingRoutes } from "../features/onboarding/routes.ts";
+import { SellerRoutes } from "../features/seller/routes.ts";
+import { PendingScreen } from "./PendingScreen.tsx";
 
 /**
  * Port of android/app/.../AkaarNavHost.kt.

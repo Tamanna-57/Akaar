@@ -7,9 +7,9 @@ import {
   type OrderStatus,
   type Party,
   type VerificationTier,
-} from "./enums";
-import { Money } from "./money";
-import type { Translatable } from "./translatable";
+} from "./enums.ts";
+import { Money } from "./money.ts";
+import type { Translatable } from "./translatable.ts";
 
 /**
  * Port of the `Offer` data class in android/core/domain/.../Trade.kt.

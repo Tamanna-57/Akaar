@@ -1,5 +1,5 @@
-import type { AppRole, BuyerOrgType, VerificationTier } from "./enums";
-import type { Translatable } from "./translatable";
+import type { AppRole, BuyerOrgType, VerificationTier } from "./enums.ts";
+import type { Translatable } from "./translatable.ts";
 
 export interface UserProfile {
   id: string;
