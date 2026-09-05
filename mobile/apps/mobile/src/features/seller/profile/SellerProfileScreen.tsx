@@ -114,11 +114,11 @@ function ProfileContent({
       })}
     >
       {/* ---- Identity block: indigo ground, motif over it ---- */}
-      <View style={{ backgroundColor: colors.primary, paddingBottom: Space.xxl }}>
+      <View style={{ backgroundColor: colors.heroSurface, paddingBottom: Space.xxl }}>
         <HeritagePattern
           width={width}
           height={260}
-          color={colors.onPrimary}
+          color={colors.onHero}
           // Much quieter over indigo than over cotton: the same ink reads
           // far louder against a dark ground.
           opacity={0.14}
@@ -133,16 +133,16 @@ function ProfileContent({
             transform: [{ translateY: headerLift }],
           }}
         >
-          <Avatar name={header.displayName} size={96} ringColor={colors.primary} />
+          <Avatar name={header.displayName} size={96} ringColor={colors.heroSurface} />
           <Text
-            style={[AkaarType.display, { color: colors.onPrimary, marginTop: Space.md, textAlign: "center" }]}
+            style={[AkaarType.display, { color: colors.onHero, marginTop: Space.md, textAlign: "center" }]}
           >
             {header.displayName}
           </Text>
-          <Text style={[AkaarType.bodyLarge, { color: colors.onPrimary, opacity: 0.9, marginTop: Space.xs }]}>
+          <Text style={[AkaarType.bodyLarge, { color: colors.onHero, opacity: 0.92, marginTop: Space.xs }]}>
             {data.craft != null ? craftName(data.craft, lang) : "Craft not chosen yet"}
           </Text>
-          <Text style={[AkaarType.body, { color: colors.onPrimary, opacity: 0.75, marginTop: 2 }]}>
+          <Text style={[AkaarType.body, { color: colors.onHero, opacity: 0.8, marginTop: 2 }]}>
             {header.region}
           </Text>
         </Animated.View>
@@ -153,7 +153,6 @@ function ProfileContent({
         style={{
           paddingHorizontal: Space.gutterSeller,
           paddingVertical: Space.lg,
-          backgroundColor: colors.surface,
           borderBottomWidth: 1,
           borderBottomColor: colors.border,
         }}
@@ -170,7 +169,6 @@ function ProfileContent({
           style={{
             paddingHorizontal: Space.gutterSeller,
             paddingVertical: Space.lg,
-            backgroundColor: colors.surface,
             borderBottomWidth: 1,
             borderBottomColor: colors.border,
           }}
@@ -245,7 +243,10 @@ function ProfileContent({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   const colors = useAkaarColors();
   return (
-    <View style={{ backgroundColor: colors.surface, paddingHorizontal: Space.gutterSeller }}>
+    // No background of its own: the block-print ground shows through
+    // between the hairlines, which is what makes the page read as printed
+    // cloth rather than as a pattern hidden behind a white sheet.
+    <View style={{ paddingHorizontal: Space.gutterSeller }}>
       <Text
         style={[AkaarType.section, { color: colors.textPrimary, paddingTop: Space.xl, paddingBottom: Space.xs }]}
       >

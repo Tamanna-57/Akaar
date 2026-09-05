@@ -18,6 +18,17 @@ export interface AkaarColors {
   success: string;
   warning: string;
   danger: string;
+  /**
+   * The dyed-cloth ground behind an identity panel, and the ink on it.
+   *
+   * Separate from `primary` because `primary` is an *action* colour: in
+   * dark mode it lightens so buttons stay legible, and a whole header slab
+   * in that pale blue reads washed out. Dark mode is a first-class theme
+   * here, not an inversion, so the cloth goes darker while the button
+   * goes lighter.
+   */
+  heroSurface: string;
+  onHero: string;
   isDark: boolean;
 }
 
@@ -33,6 +44,8 @@ export const LightColors: AkaarColors = {
   success: Palette.success,
   warning: Palette.warning,
   danger: Palette.danger,
+  heroSurface: Palette.indigo700,
+  onHero: Palette.white,
   isDark: false,
 };
 
@@ -48,5 +61,7 @@ export const DarkColors: AkaarColors = {
   success: Palette.successDark,
   warning: Palette.warningDark,
   danger: Palette.dangerDark,
+  heroSurface: Palette.indigo900,
+  onHero: Palette.nightInk,
   isDark: true,
 };

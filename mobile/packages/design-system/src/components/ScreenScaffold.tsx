@@ -35,7 +35,10 @@ export function ScreenScaffold({
           height={height}
           // Quieter in dark mode: the same ink on a near-black ground reads
           // considerably louder than it does on cotton.
-          opacity={patternOpacity ?? (colors.isDark ? 0.35 : 0.55)}
+          // Tuned by looking at a render, not guessed: below this the
+          // cloth simply is not there, above it starts competing with body
+          // text on a cheap LCD.
+          opacity={patternOpacity ?? (colors.isDark ? 0.5 : 0.9)}
         />
       ) : null}
       <View style={{ flex: 1 }}>{children}</View>
