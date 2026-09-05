@@ -9,6 +9,12 @@ export * from "./theme/type.ts";
 export * from "./theme/theme.tsx";
 
 export * from "./components/Buttons.tsx";
+export * from "./components/HeritagePattern.tsx";
+export * from "./components/motifGrid.ts";
+export * from "./components/ScreenScaffold.tsx";
+export * from "./components/Avatar.tsx";
+export * from "./components/Badge.tsx";
+export * from "./components/InfoRow.tsx";
 export * from "./components/Chips.tsx";
 export * from "./components/Inputs.tsx";
 export * from "./components/Surfaces.tsx";

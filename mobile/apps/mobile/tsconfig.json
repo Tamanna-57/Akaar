@@ -9,7 +9,8 @@
     ],
     "types": [
       "react",
-      "react-native"
+      "react-native",
+      "node"
     ],
     "noEmit": true,
     "allowJs": true,

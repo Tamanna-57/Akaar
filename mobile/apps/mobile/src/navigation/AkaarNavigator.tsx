@@ -6,6 +6,8 @@ import { ClusterRoutes } from "../features/cluster/routes.ts";
 import { LaunchScreen } from "../features/onboarding/LaunchScreen.tsx";
 import { OnboardingRoutes } from "../features/onboarding/routes.ts";
 import { SellerRoutes } from "../features/seller/routes.ts";
+import { SellerProfileScreen } from "../features/seller/profile/SellerProfileScreen.tsx";
+import { sampleSellerProfile } from "../features/seller/profile/sampleProfile.ts";
 import { PendingScreen } from "./PendingScreen.tsx";
 
 /**
@@ -28,7 +30,17 @@ export function AkaarNavigator({
   initialRouteName?: string;
 }) {
   return (
-    <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      initialRouteName={initialRouteName}
+      screenOptions={{
+        headerShown: false,
+        // design-system.md, Motion: "Shared-axis for navigation". On Android
+        // the platform's shared-axis transition is what slide_from_right
+        // maps to, and it is the transition users already know from every
+        // other app on the phone.
+        animation: "slide_from_right",
+      }}
+    >
       <Stack.Screen name={OnboardingRoutes.Launch}>
         {({ navigation }) => (
           <LaunchScreen onContinue={() => navigation.navigate(OnboardingRoutes.Language)} />
@@ -44,7 +56,31 @@ export function AkaarNavigator({
         {() => <PendingScreen name="Phone and OTP" />}
       </Stack.Screen>
 
-      <Stack.Screen name={SellerRoutes.Home}>{() => <PendingScreen name="Seller home" />}</Stack.Screen>
+      <Stack.Screen name={SellerRoutes.Home}>
+        {({ navigation }) => (
+          <PendingScreen
+            name="Seller home"
+            actionLabel="Open your profile"
+            onAction={() => navigation.navigate(SellerRoutes.Profile)}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen name={SellerRoutes.Profile}>
+        {({ navigation }) => (
+          <SellerProfileScreen
+            // Stand-in data until a repository exists - see sampleProfile.ts.
+            state={sampleSellerProfile}
+            onEdit={() => navigation.navigate(OnboardingRoutes.Role)}
+            onOpenProducts={() => navigation.navigate(SellerRoutes.MyProducts)}
+            onOpenCluster={() => navigation.navigate(ClusterRoutes.Queue)}
+          />
+        )}
+      </Stack.Screen>
+
+      <Stack.Screen name={SellerRoutes.MyProducts}>
+        {() => <PendingScreen name="Your products" />}
+      </Stack.Screen>
       <Stack.Screen name={BuyerRoutes.Discover}>{() => <PendingScreen name="Discover" />}</Stack.Screen>
       <Stack.Screen name={ClusterRoutes.Queue}>{() => <PendingScreen name="Cluster queue" />}</Stack.Screen>
     </Stack.Navigator>
