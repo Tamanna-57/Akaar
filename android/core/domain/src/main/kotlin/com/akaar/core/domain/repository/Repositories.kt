@@ -127,3 +127,30 @@ sealed interface OfferResponse {
      */
     data class BelowFloor(val floor: Money, val offered: Money, val message: String) : OfferResponse
 }
+
+/**
+ * The artisan's and buyer's own profile answers.
+ *
+ * Separate from [SessionRepository] because these outlive a session and are
+ * local-first: they are the user's own answers and must survive a dead network.
+ */
+interface ProfileRepository {
+    val artisan: Flow<ArtisanDraft?>
+    val buyer: Flow<BuyerDraft?>
+    suspend fun saveArtisan(draft: ArtisanDraft): Result<Unit>
+    suspend fun saveBuyer(draft: BuyerDraft): Result<Unit>
+}
+
+data class ArtisanDraft(
+    val displayName: String,
+    val state: String,
+    val district: String,
+    val craftSlug: String,
+    val capacityPerWeek: Int,
+)
+
+data class BuyerDraft(
+    val orgName: String,
+    val orgType: String,
+    val state: String,
+)

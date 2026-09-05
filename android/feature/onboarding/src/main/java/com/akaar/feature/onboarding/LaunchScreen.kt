@@ -19,6 +19,16 @@ object OnboardingRoutes {
     const val LANGUAGE = "onboarding/language"
     const val ROLE = "onboarding/role"
     const val PHONE = "onboarding/phone"
+    const val OTP = "onboarding/otp"
+
+    // Seller profile: one question per screen.
+    const val NAME = "onboarding/name"
+    const val STATE = "onboarding/state"
+    const val DISTRICT = "onboarding/district"
+    const val CRAFT = "onboarding/craft"
+    const val CAPACITY = "onboarding/capacity"
+
+    const val BUYER_PROFILE = "onboarding/buyer"
 }
 
 /**

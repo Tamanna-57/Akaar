@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_home">Home</string>
+    <string name="tab_add">Add</string>
+    <string name="tab_products">Products</string>
+    <string name="tab_requests">Requests</string>
+    <string name="tab_assistant">Help</string>
+
+    <string name="seller_greeting">Namaste, %1$s</string>
+    <string name="seller_needs_attention">Needs your attention</string>
+    <string name="seller_nothing_waiting">Nothing is waiting for you</string>
+    <string name="seller_nothing_waiting_body">When a buyer asks about your work, it will appear here.</string>
+    <string name="seller_add_product">Add a product</string>
+    <string name="seller_add_product_sub">Take a photo and speak about it</string>
+    <string name="seller_my_products">My products</string>
+    <string name="seller_listed">%1$d listed</string>
+    <string name="seller_drafts">%1$d draft</string>
+    <string name="seller_coming_soon">This screen is built in the next phase.</string>
+</resources>

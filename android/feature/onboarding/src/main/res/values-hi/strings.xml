@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ob_language_question">अपनी भाषा चुनें</string>
+    <string name="ob_language_helper">आप इसे बाद में बदल सकते हैं</string>
+    <string name="ob_continue">आगे बढ़ें</string>
+    <string name="ob_back">पीछे</string>
+
+    <string name="ob_role_question">आप क्या करना चाहते हैं?</string>
+    <string name="ob_role_seller">मैं शिल्प बनाती और बेचती हूँ</string>
+    <string name="ob_role_seller_sub">अपना काम दिखाएँ और सही दाम पाएँ</string>
+    <string name="ob_role_buyer">मैं शिल्प खरीदना चाहता हूँ</string>
+    <string name="ob_role_buyer_sub">कारीगर खोजें और ऑर्डर दें</string>
+
+    <string name="ob_phone_question">आपका मोबाइल नंबर</string>
+    <string name="ob_phone_helper">हम इस नंबर पर कोड भेजेंगे</string>
+    <string name="ob_phone_label">मोबाइल नंबर</string>
+    <string name="ob_phone_error">10 अंकों का मोबाइल नंबर डालें</string>
+    <string name="ob_send_code">कोड भेजें</string>
+
+    <string name="ob_otp_question">कोड डालें</string>
+    <string name="ob_otp_label">6 अंकों का कोड</string>
+    <string name="ob_otp_demo">डेमो: कोई भी 6 अंक चलेंगे</string>
+    <string name="ob_verify">जाँचें</string>
+
+    <string name="ob_name_question">आपका नाम क्या है?</string>
+    <string name="ob_name_label">आपका नाम</string>
+    <string name="ob_state_question">आप किस राज्य में रहती हैं?</string>
+    <string name="ob_district_question">कौन सा ज़िला?</string>
+    <string name="ob_district_label">ज़िला</string>
+    <string name="ob_craft_question">आप कौन सा शिल्प बनाती हैं?</string>
+    <string name="ob_craft_search">शिल्प खोजें</string>
+    <string name="ob_capacity_question">एक हफ़्ते में कितने बना सकती हैं?</string>
+    <string name="ob_capacity_helper">अंदाज़ा ठीक है। बाद में बदल सकती हैं।</string>
+    <string name="ob_finish">पूरा करें</string>
+
+    <string name="ob_buyer_org_question">आपके व्यापार का नाम?</string>
+    <string name="ob_buyer_org_label">व्यापार का नाम</string>
+    <string name="ob_buyer_type_question">आप किस तरह के खरीदार हैं?</string>
+    <string name="ob_type_boutique">बुटीक</string>
+    <string name="ob_type_exporter">निर्यातक</string>
+    <string name="ob_type_retailer">दुकानदार</string>
+    <string name="ob_type_gifting">कॉर्पोरेट गिफ्टिंग</string>
+    <string name="ob_type_individual">व्यक्तिगत</string>
+
+    <string name="ob_speak">बोलें</string>
+    <string name="ob_listen">सुनें</string>
+</resources>

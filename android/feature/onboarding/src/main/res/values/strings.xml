@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- UI strings are localised through Android resources, never translated by a
+     model at runtime. Only user-generated content goes through translation. -->
+<resources>
+    <string name="ob_language_question">Choose your language</string>
+    <string name="ob_language_helper">You can change this later</string>
+    <string name="ob_continue">Continue</string>
+    <string name="ob_back">Back</string>
+
+    <string name="ob_role_question">What do you want to do?</string>
+    <string name="ob_role_seller">I make and sell craft</string>
+    <string name="ob_role_seller_sub">List your work and get fair prices</string>
+    <string name="ob_role_buyer">I want to buy craft</string>
+    <string name="ob_role_buyer_sub">Find artisans and place orders</string>
+
+    <string name="ob_phone_question">Your mobile number</string>
+    <string name="ob_phone_helper">We will send a code to this number</string>
+    <string name="ob_phone_label">Mobile number</string>
+    <string name="ob_phone_error">Enter a 10 digit mobile number</string>
+    <string name="ob_send_code">Send code</string>
+
+    <string name="ob_otp_question">Enter the code</string>
+    <string name="ob_otp_label">6 digit code</string>
+    <string name="ob_otp_demo">Demo mode: any 6 digits will work</string>
+    <string name="ob_verify">Verify</string>
+
+    <string name="ob_name_question">What is your name?</string>
+    <string name="ob_name_label">Your name</string>
+    <string name="ob_state_question">Which state do you live in?</string>
+    <string name="ob_district_question">Which district?</string>
+    <string name="ob_district_label">District</string>
+    <string name="ob_craft_question">What craft do you make?</string>
+    <string name="ob_craft_search">Search crafts</string>
+    <string name="ob_capacity_question">How many pieces can you make in a week?</string>
+    <string name="ob_capacity_helper">A rough number is fine. You can change it later.</string>
+    <string name="ob_finish">Finish</string>
+
+    <string name="ob_buyer_org_question">What is your business called?</string>
+    <string name="ob_buyer_org_label">Business name</string>
+    <string name="ob_buyer_type_question">What kind of buyer are you?</string>
+    <string name="ob_type_boutique">Boutique</string>
+    <string name="ob_type_exporter">Exporter</string>
+    <string name="ob_type_retailer">Retailer</string>
+    <string name="ob_type_gifting">Corporate gifting</string>
+    <string name="ob_type_individual">Individual</string>
+
+    <string name="ob_speak">Speak</string>
+    <string name="ob_listen">Listen</string>
+</resources>
