@@ -1,4 +1,4 @@
-import { AkaarPrimaryButton, AkaarType, Space, useAkaarColors } from "@akaar/design-system";
+import { AkaarPrimaryButton, AkaarTextButton, AkaarType, Space, useAkaarColors } from "@akaar/design-system";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -9,7 +9,14 @@ import { Text, View } from "react-native";
  * real flow (Phase 3), because the choice decides what the user can read -
  * so this screen leads with an action rather than with prose.
  */
-export function LaunchScreen({ onContinue }: { onContinue: () => void }) {
+export function LaunchScreen({
+  onContinue,
+  onOpenDeviceChecks,
+}: {
+  onContinue: () => void;
+  /** Debug builds only - see src/selftest/. */
+  onOpenDeviceChecks?: () => void;
+}) {
   const colors = useAkaarColors();
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: Space.xl }}>
@@ -23,6 +30,11 @@ export function LaunchScreen({ onContinue }: { onContinue: () => void }) {
         Aapki kala, aapka daam
       </Text>
       <AkaarPrimaryButton text="Shuru karein" onPress={onContinue} sellerFlow accessibilityLabel="Start" />
+
+      {/* Compiled out of release bundles by __DEV__ in the navigator. */}
+      {__DEV__ && onOpenDeviceChecks != null ? (
+        <AkaarTextButton text="Device checks" onPress={onOpenDeviceChecks} style={{ marginTop: Space.xl }} />
+      ) : null}
     </View>
   );
 }

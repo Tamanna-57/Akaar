@@ -7,6 +7,7 @@ import { LaunchScreen } from "../features/onboarding/LaunchScreen.tsx";
 import { OnboardingRoutes } from "../features/onboarding/routes.ts";
 import { SellerRoutes } from "../features/seller/routes.ts";
 import { PendingScreen } from "./PendingScreen.tsx";
+import { SelfTestScreen } from "../selftest/SelfTestScreen.tsx";
 
 /**
  * Port of android/app/.../AkaarNavHost.kt.
@@ -22,6 +23,9 @@ import { PendingScreen } from "./PendingScreen.tsx";
  */
 const Stack = createNativeStackNavigator();
 
+/** Debug-only route for the on-device checks - see src/selftest/. */
+export const DEV_SELF_TEST_ROUTE = "dev/self-test";
+
 export function AkaarNavigator({
   initialRouteName = OnboardingRoutes.Launch,
 }: {
@@ -31,7 +35,10 @@ export function AkaarNavigator({
     <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false }}>
       <Stack.Screen name={OnboardingRoutes.Launch}>
         {({ navigation }) => (
-          <LaunchScreen onContinue={() => navigation.navigate(OnboardingRoutes.Language)} />
+          <LaunchScreen
+            onContinue={() => navigation.navigate(OnboardingRoutes.Language)}
+            onOpenDeviceChecks={__DEV__ ? () => navigation.navigate(DEV_SELF_TEST_ROUTE) : undefined}
+          />
         )}
       </Stack.Screen>
 
@@ -47,6 +54,15 @@ export function AkaarNavigator({
       <Stack.Screen name={SellerRoutes.Home}>{() => <PendingScreen name="Seller home" />}</Stack.Screen>
       <Stack.Screen name={BuyerRoutes.Discover}>{() => <PendingScreen name="Discover" />}</Stack.Screen>
       <Stack.Screen name={ClusterRoutes.Queue}>{() => <PendingScreen name="Cluster queue" />}</Stack.Screen>
+
+      {/*
+        Debug builds only. The device checks are a development tool, and
+        __DEV__ is compiled out of a release bundle, so this route cannot
+        reach a shipped app.
+      */}
+      {__DEV__ ? (
+        <Stack.Screen name={DEV_SELF_TEST_ROUTE}>{() => <SelfTestScreen />}</Stack.Screen>
+      ) : null}
     </Stack.Navigator>
   );
 }

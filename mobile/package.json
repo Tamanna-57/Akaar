@@ -10,7 +10,8 @@
     "typecheck:app": "pnpm --filter=@akaar/mobile-app run typecheck",
     "lint": "eslint . --ext .ts,.tsx",
     "boundaries": "node scripts/check-module-boundaries.mjs",
-    "test": "pnpm -r run test"
+    "test": "pnpm -r run test",
+    "check:bundle": "node scripts/check-bundle.mjs"
   },
   "devDependencies": {
     "typescript": "^5.6.3",

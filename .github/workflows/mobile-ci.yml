@@ -47,3 +47,10 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck && pnpm typecheck:app
+
+      # Builds the real JavaScript bundle and looks inside it. This is the
+      # only check that catches a native adapter silently resolving to the
+      # pure entry point - typecheck and unit tests both pass while that is
+      # broken. See scripts/check-bundle.mjs.
+      - name: Bundle includes the native modules
+        run: pnpm check:bundle

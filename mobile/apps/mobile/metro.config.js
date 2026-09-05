@@ -18,6 +18,24 @@ const config = {
       path.resolve(projectRoot, "node_modules"),
       path.resolve(workspaceRoot, "node_modules"),
     ],
+
+    // REQUIRED, and not optional taste.
+    //
+    // Our packages expose two entry points: "." (pure, no native modules)
+    // and "./native" (the adapters). That split is declared with the
+    // "exports" field in each package.json.
+    //
+    // Metro ignores "exports" unless this flag is on, and - worse - it does
+    // not fail when it cannot match a subpath: it silently falls back to the
+    // package's "main". So `import { KeychainSecureStorage } from
+    // "@akaar/core-data/native"` quietly resolved to the PURE index instead,
+    // making every native class `undefined` at runtime, on a device, with no
+    // build error anywhere.
+    //
+    // TypeScript does honour "exports", so `tsc` was perfectly happy while
+    // the bundle was wrong. Verified by inspecting the built bundle: with
+    // this flag off, react-native-keychain and op-sqlite appear zero times.
+    unstable_enablePackageExports: true,
   },
 };
 

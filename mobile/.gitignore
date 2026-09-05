@@ -13,3 +13,15 @@ android/build/
 # Env
 .env
 .env.local
+
+# Android build artefacts and local machine settings
+android/.gradle/
+android/local.properties
+.cxx/
+
+# The repo root ignores *.keystore, which is right for real signing keys.
+# React Native's debug.keystore is different: it is a publicly known key that
+# ships in every RN template, it only signs debug builds, and without it in
+# the repo `pnpm android` fails for anyone else who clones. So it is
+# re-included here, deliberately and narrowly.
+!apps/mobile/android/app/debug.keystore
