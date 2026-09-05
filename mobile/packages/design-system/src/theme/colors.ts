@@ -1,4 +1,4 @@
-import { Palette } from "./palette";
+import { Palette } from "./palette.ts";
 
 /**
  * Port of `AkaarColors` / `LightColors` / `DarkColors` in

@@ -1,11 +1,11 @@
 import type { AppResult, Stream } from "@akaar/core-common";
-import type { Capability } from "./capability";
-import type { AppRole, VerificationTier } from "./enums";
-import { Money } from "./money";
-import type { Offer, ProductSummary } from "./trade";
-import type { Craft, TaxonomyTerm } from "./profiles";
-import type { ArtisanProfile, UserProfile } from "./profiles";
-import type { Product, SellerPricing } from "./product";
+import type { Capability } from "./capability.ts";
+import type { AppRole, VerificationTier } from "./enums.ts";
+import { Money } from "./money.ts";
+import type { Offer, ProductSummary } from "./trade.ts";
+import type { Craft, TaxonomyTerm } from "./profiles.ts";
+import type { ArtisanProfile, UserProfile } from "./profiles.ts";
+import type { Product, SellerPricing } from "./product.ts";
 
 /**
  * Port of android/core/domain/.../Repositories.kt.

@@ -3,16 +3,16 @@
 // dependency in every feature package.
 export * from "@akaar/core-common";
 
-export * from "./theme/colors";
-export * from "./theme/space";
-export * from "./theme/type";
-export * from "./theme/theme";
+export * from "./theme/colors.ts";
+export * from "./theme/space.ts";
+export * from "./theme/type.ts";
+export * from "./theme/theme.tsx";
 
-export * from "./components/Buttons";
-export * from "./components/Chips";
-export * from "./components/Inputs";
-export * from "./components/Surfaces";
-export * from "./components/StateHost";
-export * from "./components/AiOutputBlock";
+export * from "./components/Buttons.tsx";
+export * from "./components/Chips.tsx";
+export * from "./components/Inputs.tsx";
+export * from "./components/Surfaces.tsx";
+export * from "./components/StateHost.tsx";
+export * from "./components/AiOutputBlock.tsx";
 
 // Palette is deliberately not re-exported - see theme/palette.ts.

@@ -40,8 +40,10 @@ jobs:
       - name: Lint
         run: pnpm lint
 
-      - name: Domain unit tests
-        run: pnpm --filter @akaar/core-domain test
+      # Domain models, the offline outbox, the photo quality gate and the
+      # voice session machine. All pure logic, so they run without a device.
+      - name: Unit tests
+        run: pnpm -r run test
 
       - name: Typecheck
         run: pnpm typecheck && pnpm typecheck:app

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo } from "react";
 import { useColorScheme } from "react-native";
-import { type AkaarColors, DarkColors, LightColors } from "./colors";
+import { type AkaarColors, DarkColors, LightColors } from "./colors.ts";
 
 /**
  * Port of `LocalAkaarColors` / `AkaarTheme` (the `@Composable` function) in

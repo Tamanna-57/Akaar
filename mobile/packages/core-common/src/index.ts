@@ -1,6 +1,6 @@
-export * from "./result";
-export * from "./ui-state";
-export * from "./stream";
+export * from "./result.ts";
+export * from "./ui-state.ts";
+export * from "./stream.ts";
 
 // Note: android/core/common/.../Dispatchers.kt (AppDispatchers) has no port
 // here on purpose. It exists in Kotlin to inject which CoroutineDispatcher a

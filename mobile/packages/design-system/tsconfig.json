@@ -4,8 +4,17 @@
     "outDir": "dist",
     "rootDir": "src",
     "jsx": "react-jsx",
-    "lib": ["ES2020"],
-    "types": ["react", "react-native"]
+    "lib": [
+      "ES2020"
+    ],
+    "types": [
+      "react",
+      "react-native"
+    ],
+    "noEmit": true,
+    "allowImportingTsExtensions": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

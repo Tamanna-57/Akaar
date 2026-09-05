@@ -1,8 +1,8 @@
 import React from "react";
 import { Pressable, type StyleProp, Text, type ViewStyle } from "react-native";
-import { AkaarType } from "../theme/type";
-import { Shapes, Space } from "../theme/space";
-import { useAkaarColors } from "../theme/theme";
+import { AkaarType } from "../theme/type.ts";
+import { Shapes, Space } from "../theme/space.ts";
+import { useAkaarColors } from "../theme/theme.tsx";
 
 /**
  * Port of android/core/designsystem/.../component/Chips.kt.
