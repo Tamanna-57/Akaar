@@ -1,0 +1,13 @@
+// MONOREPO PATHS
+//
+// This app lives at mobile/apps/mobile, but its dependencies are installed
+// at the workspace root, mobile/node_modules. So every node_modules path
+// below is ../../../node_modules, not the ../node_modules a standalone
+// React Native app would use. The same applies to the react { } block in
+// app/build.gradle.
+pluginManagement { includeBuild("../../../node_modules/@react-native/gradle-plugin") }
+plugins { id("com.facebook.react.settings") }
+extensions.configure(com.facebook.react.ReactSettingsExtension){ ex -> ex.autolinkLibrariesFromCommand() }
+rootProject.name = 'Akaar'
+include ':app'
+includeBuild('../../../node_modules/@react-native/gradle-plugin')

@@ -53,6 +53,14 @@ is pure and Node-testable, `@akaar/core-data/native` pulls in the native
 modules. That split is what lets the whole outbox be tested in CI with no
 emulator.
 
+That split depends on `unstable_enablePackageExports: true` in
+`apps/mobile/metro.config.js`. Without it Metro ignores the `exports` field
+and, rather than failing, silently resolves `.../native` to the *pure* entry
+point - so every native class becomes `undefined` at runtime while `tsc` and
+the unit tests stay green. `pnpm check:bundle` builds the real bundle and
+asserts the native modules are inside it; it runs in CI, and it is the only
+check that can catch this.
+
 **Import convention:** relative imports carry explicit `.ts`/`.tsx`
 extensions. Metro, `tsc` (`allowImportingTsExtensions`) and Node's ESM
 loader all accept them, and it is what lets `node --test` run the source
@@ -103,19 +111,23 @@ Each requirement from `docs/04-architecture/android-architecture.md` and
 
 ### Before this runs on a phone
 
-1. Generate the RN native projects (`apps/mobile/android`, `apps/mobile/ios`)
-   from the RN template — only the two hand-written Android files are
-   committed here.
-2. Register `ScreenGuardPackage()` in `MainApplication`, and point
-   `AndroidManifest.xml` at `network_security_config.xml` via
-   `android:networkSecurityConfig`.
-3. Replace the placeholder certificate pins with real SPKI hashes, and ship
-   a backup pin (the file explains why).
-4. Supply a real `MutationTransport` — the Supabase client wired to the RPC
+The Android project **is** generated and wired now — `pnpm android` in
+`apps/mobile` builds and installs it. See
+[RUNNING-ON-A-PHONE.md](RUNNING-ON-A-PHONE.md).
+
+What is still open:
+
+1. Replace the placeholder certificate pins with real SPKI hashes, and ship
+   a backup pin (the file explains why). Pinning is deliberately **not**
+   switched on in the manifest until then — turning it on with placeholders
+   would fail every request.
+2. Supply a real `MutationTransport` — the Supabase client wired to the RPC
    names in `apps/mobile/src/data/supabaseConfig.ts` — and pass it to
-   `createAppContainer`.
-5. Write the frame-processor plugin that produces `ImageQualityMetrics`;
+   `createAppContainer`. Nothing talks to a real server yet.
+3. Write the frame-processor plugin that produces `ImageQualityMetrics`;
    the decision logic that consumes them is already done and tested.
+4. Build a camera preview screen. The plumbing exists; the screen does not.
+5. Generate the iOS project (needs a Mac).
 
 ## Working with this workspace
 
@@ -127,7 +139,13 @@ pnpm lint
 pnpm -r run test      # 37 tests, no device or emulator needed
 pnpm typecheck        # packages/*
 pnpm typecheck:app    # apps/mobile
+pnpm check:bundle     # builds the JS bundle, checks the native modules are in it
 ```
+
+To run it on a real phone, see **[RUNNING-ON-A-PHONE.md](RUNNING-ON-A-PHONE.md)**.
+The app has a built-in **Device checks** screen (debug builds only) that runs
+the eight checks a computer cannot answer - including whether the local
+database is genuinely encrypted.
 
 Running the app on a device/simulator needs the native RN toolchain
 (Xcode/Android SDK) the same way `android/` needs the Android SDK and

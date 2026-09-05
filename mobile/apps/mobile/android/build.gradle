@@ -1,0 +1,27 @@
+buildscript {
+    ext {
+        buildToolsVersion = "35.0.0"
+        // Matches docs/04-architecture/android-architecture.md: minSdk 24
+        // because the target device is a shared 3 GB Android 11 phone;
+        // targetSdk 35 as the Kotlin app declares. Every native library we
+        // use (vision-camera, op-sqlite, keychain, background-fetch,
+        // audio-recorder-player) inherits minSdkVersion from here and none
+        // of them needs more than 24 - checked, not assumed.
+        minSdkVersion = 24
+        compileSdkVersion = 35
+        targetSdkVersion = 35
+        ndkVersion = "26.1.10909125"
+        kotlinVersion = "1.9.24"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle")
+        classpath("com.facebook.react:react-native-gradle-plugin")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin")
+    }
+}
+
+apply plugin: "com.facebook.react.rootproject"

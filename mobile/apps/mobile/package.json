@@ -6,7 +6,8 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "clean:android": "cd android && ./gradlew clean"
   },
   "dependencies": {
     "@akaar/core-common": "workspace:*",
@@ -33,6 +34,8 @@
     "sqlcipher": true
   },
   "devDependencies": {
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
     "@react-native/babel-preset": "^0.76.5",
     "@react-native/metro-config": "^0.76.5",
     "@types/react": "^18.3.12",
