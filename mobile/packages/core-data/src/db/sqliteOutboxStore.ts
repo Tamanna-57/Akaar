@@ -8,7 +8,14 @@ import type { Database } from "./database.ts";
  * and this is the row-mapping half.
  */
 export class SqliteOutboxStore implements OutboxStore {
-  constructor(private readonly db: Database) {}
+  // Plain field + assignment rather than a TS parameter property: a
+  // parameter property *emits* code, so it cannot be type-stripped, and
+  // this file is reachable from the package index that `node --test` loads.
+  private readonly db: Database;
+
+  constructor(db: Database) {
+    this.db = db;
+  }
 
   async insert(mutation: LocalMutation): Promise<void> {
     await this.db.execute(
