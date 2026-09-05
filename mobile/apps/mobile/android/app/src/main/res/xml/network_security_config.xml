@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Certificate pinning, per android-architecture.md ("Certificate pinning on
+  the API host").
+
+  Done declaratively in the platform's own network security config rather
+  than through a JS fetch-replacement library: this way the pin applies to
+  every connection the process makes - including ones made by native
+  libraries and by the Supabase client - instead of only to calls that
+  happen to go through one wrapped fetch.
+
+  BEFORE RELEASE:
+    - Replace the placeholder pins below with the real SPKI SHA-256 hashes:
+        openssl s_client -connect <project>.supabase.co:443 |
+          openssl x509 -pubkey -noout |
+          openssl pkey -pubin -outform der |
+          openssl dgst -sha256 -binary | openssl enc -base64
+    - Always ship at least TWO pins: the leaf/intermediate in use and a
+      backup. A single pin plus an unplanned certificate rotation bricks
+      every installed app until the users update.
+    - Set an expiration you will actually notice, so a forgotten pin fails
+      open on a future date rather than locking users out silently.
+    - cleartextTrafficPermitted stays false everywhere.
+-->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">supabase.co</domain>
+        <pin-set expiration="2027-01-01">
+            <pin digest="SHA-256">REPLACE_WITH_LEAF_OR_INTERMEDIATE_SPKI_PIN=</pin>
+            <pin digest="SHA-256">REPLACE_WITH_BACKUP_SPKI_PIN=</pin>
+        </pin-set>
+    </domain-config>
+
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+      Debug builds only: lets a developer proxy traffic with a local CA.
+      This block is ignored in release builds, so it cannot weaken shipped
+      apps.
+    -->
+    <debug-overrides>
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

@@ -1,11 +1,11 @@
 import { assertNever, type UiState } from "@akaar/core-common";
 import React from "react";
 import { Text, View } from "react-native";
-import { Space } from "../theme/space";
-import { AkaarType } from "../theme/type";
-import { useAkaarColors } from "../theme/theme";
-import { AkaarSecondaryButton } from "./Buttons";
-import { Skeleton } from "./Surfaces";
+import { Space } from "../theme/space.ts";
+import { AkaarType } from "../theme/type.ts";
+import { useAkaarColors } from "../theme/theme.tsx";
+import { AkaarSecondaryButton } from "./Buttons.tsx";
+import { Skeleton } from "./Surfaces.tsx";
 
 /**
  * Port of android/core/designsystem/.../component/StateHost.kt.

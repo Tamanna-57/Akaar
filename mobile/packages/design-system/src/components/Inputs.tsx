@@ -1,9 +1,9 @@
 import React from "react";
 import { type KeyboardTypeOptions, Text, TextInput, View } from "react-native";
-import { AkaarType } from "../theme/type";
-import { Shapes, Space, Touch } from "../theme/space";
-import { useAkaarColors } from "../theme/theme";
-import { AkaarTextButton } from "./Buttons";
+import { AkaarType } from "../theme/type.ts";
+import { Shapes, Space, Touch } from "../theme/space.ts";
+import { useAkaarColors } from "../theme/theme.tsx";
+import { AkaarTextButton } from "./Buttons.tsx";
 
 /**
  * Port of android/core/designsystem/.../component/Inputs.kt.

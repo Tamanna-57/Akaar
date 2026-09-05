@@ -1,4 +1,4 @@
-import { assertNever } from "./result";
+import { assertNever } from "./result.ts";
 
 /**
  * Port of android/core/common/.../UiState.kt.

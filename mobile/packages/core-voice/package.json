@@ -1,0 +1,24 @@
+{
+  "name": "@akaar/core-voice",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./native": "./src/native.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types 'src/**/*.test.ts'"
+  },
+  "peerDependencies": {
+    "react-native-audio-recorder-player": ">=3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "react-native-audio-recorder-player": "^3.6.12",
+    "typescript": "^5.6.3"
+  }
+}
