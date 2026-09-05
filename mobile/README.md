@@ -12,7 +12,7 @@ device-layer logic the architecture docs turn on — the offline outbox
 (idempotency, per-entity FIFO, exponential backoff, permanent-failure
 blocking), the encrypted-database key handling, the photo quality gate, the
 voice recording state machine, and the audio/photo retention rules. All of
-it is unit tested (34 tests) and runs in CI without a device.
+it is unit tested (37 tests) and runs in CI without a device.
 
 **What is not verified:** anything that only proves itself on hardware —
 that vision-camera focuses, that op-sqlite's SQLCipher build actually
@@ -124,7 +124,7 @@ cd mobile
 pnpm install
 pnpm boundaries      # feature/seller vs feature/buyer independence check
 pnpm lint
-pnpm -r run test      # 34 tests, no device or emulator needed
+pnpm -r run test      # 37 tests, no device or emulator needed
 pnpm typecheck        # packages/*
 pnpm typecheck:app    # apps/mobile
 ```

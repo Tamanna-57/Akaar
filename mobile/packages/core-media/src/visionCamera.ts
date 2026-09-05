@@ -18,10 +18,15 @@ export interface FrameAnalyser {
 }
 
 export class VisionCameraService implements CameraService {
-  constructor(
-    private readonly camera: () => Camera | null,
-    private readonly analyser: FrameAnalyser,
-  ) {}
+  // Plain fields, not TS parameter properties - see the note in
+  // core-data/src/db/sqliteOutboxStore.ts.
+  private readonly camera: () => Camera | null;
+  private readonly analyser: FrameAnalyser;
+
+  constructor(camera: () => Camera | null, analyser: FrameAnalyser) {
+    this.camera = camera;
+    this.analyser = analyser;
+  }
 
   async capture(): Promise<CapturedPhoto> {
     const camera = this.camera();
